@@ -71,7 +71,7 @@ if (canvas && context) {
         gulp.play()
       }
 
-      for (var i = index + 1; i < snake.cells.length; i++) {
+      for (let i = index + 1; i < snake.cells.length; i++) {
         if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
           snake.x = 160
           snake.y = 160
