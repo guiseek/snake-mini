@@ -57,10 +57,12 @@ if (canvas && context) {
     if (snake.cells.length > snake.maxCells) {
       snake.cells.pop()
     }
+
     context.fillStyle = 'darkred'
     context.fillRect(apple.x, apple.y, grid - 1, grid - 1)
 
     context.fillStyle = 'lime'
+
     snake.cells.forEach((cell, index) => {
       context.fillRect(cell.x, cell.y, grid - 1, grid - 1)
 
@@ -72,13 +74,14 @@ if (canvas && context) {
       }
 
       for (let i = index + 1; i < snake.cells.length; i++) {
-        if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+        const { x, y } = snake.cells[i]
+        if (cell.x === x && cell.y === y) {
           snake.x = 160
           snake.y = 160
+          snake.dy = 0
+          snake.dx = grid
           snake.cells = []
           snake.maxCells = 4
-          snake.dx = grid
-          snake.dy = 0
 
           apple.x = getRandomInt(0, 25) * grid
           apple.y = getRandomInt(0, 25) * grid
@@ -87,23 +90,21 @@ if (canvas && context) {
     })
   }
 
-  document.addEventListener('keydown', (e) => {
-    console.log(e.which, e.key);
-    
-    if (e.which === 37 && snake.dx === 0) {
+  document.onkeydown = (e) => {
+    if (e.key === 'ArrowLeft' && snake.dx === 0) {
       snake.dx = -grid
       snake.dy = 0
-    } else if (e.which === 38 && snake.dy === 0) {
+    } else if (e.key === 'ArrowUp' && snake.dy === 0) {
       snake.dy = -grid
       snake.dx = 0
-    } else if (e.which === 39 && snake.dx === 0) {
+    } else if (e.key === 'ArrowRight' && snake.dx === 0) {
       snake.dx = grid
       snake.dy = 0
-    } else if (e.code === 'ArrowDown' && snake.dy === 0) {
+    } else if (e.key === 'ArrowDown' && snake.dy === 0) {
       snake.dy = grid
       snake.dx = 0
     }
-  })
+  }
 
   loop()
 }
