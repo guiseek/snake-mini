@@ -8,10 +8,10 @@ const canvas = document.querySelector<HTMLCanvasElement>('#game')
 const context = canvas && canvas.getContext('2d')
 
 if (canvas && context) {
-  let grid = 16
+  const grid = 16
   let count = 0
 
-  let snake: Snake = {
+  const snake: Snake = {
     x: 160,
     y: 160,
     dx: grid,
@@ -20,7 +20,7 @@ if (canvas && context) {
     maxCells: 4,
   }
 
-  let apple: Vector = {
+  const apple: Vector = {
     x: 320,
     y: 320,
   }
@@ -88,6 +88,8 @@ if (canvas && context) {
   }
 
   document.addEventListener('keydown', (e) => {
+    console.log(e.which, e.key);
+    
     if (e.which === 37 && snake.dx === 0) {
       snake.dx = -grid
       snake.dy = 0
@@ -97,11 +99,11 @@ if (canvas && context) {
     } else if (e.which === 39 && snake.dx === 0) {
       snake.dx = grid
       snake.dy = 0
-    } else if (e.which === 40 && snake.dy === 0) {
+    } else if (e.code === 'ArrowDown' && snake.dy === 0) {
       snake.dy = grid
       snake.dx = 0
     }
   })
 
-  requestAnimationFrame(loop)
+  loop()
 }
